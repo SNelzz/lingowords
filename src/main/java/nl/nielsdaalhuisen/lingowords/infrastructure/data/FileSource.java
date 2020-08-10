@@ -6,6 +6,7 @@ import org.springframework.core.io.Resource;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -18,11 +19,11 @@ public class FileSource implements SourceDeserializer{
     public List<Word> importWords() {
         List<Word> words = new ArrayList<Word>();
 
-        FileInputStream inputStream = null;
+        InputStream inputStream = null;
         Scanner sc = null;
         try {
             Resource resource = new ClassPathResource("basiswoorden-gekeurd.txt");
-            inputStream = (FileInputStream) resource.getInputStream();
+            inputStream = resource.getInputStream();
             sc = new Scanner(inputStream, "UTF-8");
             while (sc.hasNextLine()) {
                 String line = sc.nextLine();
@@ -31,11 +32,15 @@ public class FileSource implements SourceDeserializer{
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            if(inputStream != null) {
-                inputStream.close();
-            }
-            if(sc != null) {
-                sc.close();
+            try {
+                if(inputStream != null) {
+                    inputStream.close();
+                }
+                if(sc != null) {
+                    sc.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
 

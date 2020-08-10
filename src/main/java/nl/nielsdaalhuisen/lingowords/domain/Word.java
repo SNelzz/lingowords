@@ -1,5 +1,7 @@
 package nl.nielsdaalhuisen.lingowords.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.UUID;
 
 public class Word {
@@ -19,6 +21,7 @@ public class Word {
         return value;
     }
 
+    @JsonIgnore
     public boolean isValid() {
         if(this.value.matches("^[a-z]{5,7}$")) {
             return true;
