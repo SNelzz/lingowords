@@ -11,7 +11,27 @@ public class Word {
         this.value = word;
     }
 
-    public boolean isValid(String word) {
-        return true;
+    public UUID getUuid() {
+        return uuid;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public boolean isValid() {
+        if(this.value.matches("^[a-z]{5,7}$")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "Word{" +
+                "uuid=" + uuid +
+                ", value='" + value + '\'' +
+                '}';
     }
 }
