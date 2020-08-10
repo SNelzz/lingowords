@@ -12,6 +12,8 @@ import java.util.Scanner;
 
 public class FileSource implements SourceDeserializer{
 
+    public FileSource() {}
+
     @Override
     public List<Word> importWords() {
         List<Word> words = new ArrayList<Word>();

@@ -11,11 +11,16 @@ public class WordService {
         this.words = words;
     }
 
-    public List<Word> wordList(Integer length) {
-        return words.WordList(length);
+    public List<Word> wordList() {
+        return words.WordList();
     }
 
-    public Word word(Integer length) {
-        return words.Word(length);
+    public List<Word> wordListBySize(Integer length) {
+        return words.WordListBySize(length);
+    }
+
+
+    public Word wordBySize(Integer length) {
+        return words.WordBySize(length);
     }
 }

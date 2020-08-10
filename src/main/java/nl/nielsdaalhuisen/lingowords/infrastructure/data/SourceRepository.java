@@ -15,12 +15,17 @@ public class SourceRepository implements WordRepository {
     }
 
     @Override
-    public List<Word> WordList(Integer length) {
+    public List<Word> WordList() {
+        return sourceDeserializer.importWords().stream().filter(p -> p.isValid()).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Word> WordListBySize(Integer length) {
         return sourceDeserializer.importWords().stream().filter(p -> p.isValid() && p.getValue().length() == length).collect(Collectors.toList());
     }
 
     @Override
-    public Word Word(Integer length) {
+    public Word WordBySize(Integer length) {
         List<Word> words = sourceDeserializer.importWords().stream().filter(p -> p.isValid() && p.getValue().length() == length).collect(Collectors.toList());
 
         Random rand = new Random();
