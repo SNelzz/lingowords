@@ -21,3 +21,13 @@ steps:
     mavenAuthenticateFeed: false
     effectivePomSkip: false
     sonarQubeRunAnalysis: false
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: '$(system.defaultworkingdirectory)/target/'
+    Contents: 'lingowords-0.0.1-SNAPSHOT.jar'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)/target/'
+    OverWrite: true
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)/target/'
+    ArtifactName: 'lingowords'
