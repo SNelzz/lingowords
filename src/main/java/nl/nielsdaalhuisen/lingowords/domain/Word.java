@@ -29,12 +29,4 @@ public class Word {
             return false;
         }
     }
-
-    @Override
-    public String toString() {
-        return "Word{" +
-                "uuid=" + uuid +
-                ", value='" + value + '\'' +
-                '}';
-    }
 }
