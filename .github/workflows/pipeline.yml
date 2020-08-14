@@ -85,3 +85,4 @@ jobs:
           heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
           heroku_app_name: "lingosource"
           heroku_email: "niels_daalhuisen@hotmail.com"
+          procfile: "web: java -jar target/lingowords-0.0.1-SNAPSHOT.jar"
