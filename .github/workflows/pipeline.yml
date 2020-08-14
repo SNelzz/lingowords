@@ -90,7 +90,7 @@ jobs:
           DOCKER_IMAGE_TARGET: docker.pkg.github.com/snelzz/lingowords/lingosource:${{ github.sha }}
           GITHUB_PACKAGE_REGISTRY_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           
-          run: |
-            docker build --tag "{DOCKER_IMAGE_TARGET}" .
-            echo "${GITHUB_PACKAGE_REGISTRY_TOKEN}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
-            docker push "{DOCKER_IMAGE_TARGET}"
+        run: |
+          docker build --tag "{DOCKER_IMAGE_TARGET}" .
+          echo "${GITHUB_PACKAGE_REGISTRY_TOKEN}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
+          docker push "{DOCKER_IMAGE_TARGET}"
