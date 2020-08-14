@@ -70,8 +70,8 @@ jobs:
           DISTRIBUTION_ID: github
           DISTRIBUTION_NAME: lingowords
           DISTRIBUTION_URL: https://maven.pkg.github.com/${{ github.repository }}
-          
-  package-image:
+  
+  deploy-heroku:
     needs: build
     
     runs-on: ubuntu-latest
@@ -81,16 +81,14 @@ jobs:
       
       - name: Load result
         uses: actions/download-artifact@v1
-        with: 
+        with:
           name: build-result
           path: target
-          
-      - name: Build and publish Docker image to GitHub Packages
-        env:
-          DOCKER_IMAGE_TARGET: docker.pkg.github.com/snelzz/lingowords/lingosource:${{ github.sha }}
-          GITHUB_PACKAGE_REGISTRY_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-        run: |
-          docker build --tag ${DOCKER_IMAGE_TARGET} .
-          echo "${GITHUB_PACKAGE_REGISTRY_TOKEN}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
-          docker push ${DOCKER_IMAGE_TARGET}
+      
+      - name: Deploy to Heroku
+        uses: AkhileshNS/heroku-deploy@v3.4.6
+        with:
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+          heroku_app_name: "lingosource"
+          heroku_email: "niels_daalhuisen@hotmail.com"
+          usedocker: true 
