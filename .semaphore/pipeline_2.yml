@@ -1,0 +1,17 @@
+version: v1.0
+name: Docker Build
+blocks:
+  - name: Build
+    task:
+      jobs:
+        - name: Build push to Docker Hub
+          commands:
+            - mvn -q package -Dmaven.test.skip=true
+            - echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin
+            - 'docker pull "$DOCKER_USERNAME"/lingowords:latest || true'
+            - 'docker build --cache-from "$DOCKER_USERNAME"/lingowords:latest -t "$DOCKER_USERNAME"/lingowords:latest .'
+            - 'docker push "$DOCKER_USERNAME"/lingowords:latest'
+agent:
+  machine:
+    type: e1-standard-2
+    os_image: ubuntu1804
