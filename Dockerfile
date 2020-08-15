@@ -1,4 +1,5 @@
 FROM adoptopenjdk/openjdk11:alpine-jre
-WORKDIR /usr/app
+ARG ENVIRONMENT
+ENV ENVIRONMENT ${ENVIRONMENT}
 COPY target/*.jar app.jar
-ENTRYPOINT ["java","-jar","app.jar"]
+ENTRYPOINT ["java","-Dspring.profiles.active=${ENVIRONMENT}", "-Djava.security.egd=file:/dev/./urandom","-jar","app.jar"]
