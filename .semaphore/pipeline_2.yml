@@ -6,6 +6,8 @@ blocks:
       jobs:
         - name: Build push to Docker Hub
           commands:
+            - sem-version java 11
+            - checkout
             - mvn -q package -Dmaven.test.skip=true
             - echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin
             - 'docker pull "$DOCKER_USERNAME"/lingowords:latest || true'
