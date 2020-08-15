@@ -6,15 +6,24 @@ blocks:
       jobs:
         - name: Build push to Docker Hub
           commands:
-            - sem-version java 11
-            - checkout
             - mvn -q package -Dmaven.test.skip=true
             - echo "$DOCKER_PASSWORD" | docker login  --username "$DOCKER_USERNAME" --password-stdin
             - 'docker pull "$DOCKER_USERNAME"/lingowords:latest || true'
-            - 'docker build --cache-from "$DOCKER_USERNAME"/lingowords:latest -t "$DOCKER_USERNAME"/lingowords:latest .'
+            - 'docker build --cache-from "$DOCKER_USERNAME"/lingowords:latest --build-arg ENVIRONMENT="${ENVIRONMENT}" -t "$DOCKER_USERNAME"/lingowords:latest .'
             - 'docker push "$DOCKER_USERNAME"/lingowords:latest'
       secrets:
         - name: dockerhub
+      env_vars:
+        - name: MAVEN_OPTS
+          value: '-Dmaven.repo.local=.m2'
+        - name: ENVIRONMENT
+          value: dev
+      prologue:
+        commands:
+          - sem-version java 11
+          - checkout
+          - 'cache restore spring-pipeline-build-$SEMAPHORE_GIT_BRANCH-$(checksum pom.xml),spring-pipeline-build-$SEMAPHORE_GIT_BRANCH,spring-pipeline-build'
+          - cache restore
 agent:
   machine:
     type: e1-standard-2
