@@ -13,12 +13,19 @@ blocks:
       jobs:
         - name: Build
           commands:
-            - sem-version java 11 - checkout - cache restore - mvn -q package -Dmaven.test.skip=true - cache store
+            - sem-version java 11
+            - checkout
+            - cache restore
+            - mvn -q package -Dmaven.test.skip=true
+            - cache store
   - name: Tests
     task:
       prologue:
         commands:
-          - sem-version java 11 - checkout - cache restore - mvn -q test-compile -Dmaven.test.skip=true
+          - sem-version java 11
+          - checkout
+          - cache restore
+          - mvn -q test-compile -Dmaven.test.skip=true
       jobs:
         - name: Run Tests
           commands:
