@@ -33,10 +33,13 @@ blocks:
       env_vars:
         - name: CODECOV_TOKEN
           value: 58bbcb42-fa6f-43e8-b115-d7e894f0023f
+        - name: SONAR_TOKEN
+          value: ff9b865ce75e8b1d0a020fd16a4755247aea0477
       epilogue:
         on_pass:
           commands:
             - 'bash <(curl -s https://codecov.io/bash) -t ${CODECOV_TOKEN}'
+            - 'mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar'
 promotions:
   - name: Dockerize
     pipeline_file: pipeline_2.yml
