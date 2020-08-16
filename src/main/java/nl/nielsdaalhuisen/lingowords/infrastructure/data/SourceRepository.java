@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 
 public class SourceRepository implements WordRepository {
     private SourceDeserializer sourceDeserializer;
+    private Random rand = new Random();
 
     public SourceRepository(SourceDeserializer sourceDeserializer) {
         this.sourceDeserializer = sourceDeserializer;
@@ -28,7 +29,6 @@ public class SourceRepository implements WordRepository {
     public Word WordBySize(Integer length) {
         List<Word> words = sourceDeserializer.importWords().stream().filter(p -> p.isValid() && p.getValue().length() == length).collect(Collectors.toList());
 
-        Random rand = new Random();
         return words.get(rand.nextInt(words.size()));
     }
 
