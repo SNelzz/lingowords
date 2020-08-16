@@ -18,7 +18,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<start-class>nl.nielsdaalhuisen.lingowords.LingowordsApplication</start-class>
-		<java.version>14</java.version>
+		<java.version>11</java.version>
 	</properties>
 
 	<dependencies>
@@ -91,14 +91,21 @@
 					</rules>
 				</configuration>
 			</plugin>
+
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
 		</plugins>
 	</build>
-	<distributionManagement>
-		<repository>
-			<id>${env.DISTRIBUTION_ID}</id>
-			<name>${env.DISTRIBUTION_NAME}</name>
-			<url>${env.DISTRIBUTION_URL}</url>
-		</repository>
-	</distributionManagement>
+
+	<profiles>
+		<profile>
+			<id>production</id>
+			<properties>
+				<maven.test.skip>true</maven.test.skip>
+			</properties>
+		</profile>
+	</profiles>
 
 </project>
