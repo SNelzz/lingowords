@@ -13,35 +13,19 @@ import java.util.Scanner;
 
 public class FileSource implements SourceDeserializer{
 
-    public FileSource() {}
-
     @Override
     public List<Word> importWords() {
         List<Word> words = new ArrayList<>();
 
-        InputStream inputStream = null;
-        Scanner sc = null;
-        try {
-            Resource resource = new ClassPathResource("basiswoorden-gekeurd.txt");
-            inputStream = resource.getInputStream();
-            sc = new Scanner(inputStream, StandardCharsets.UTF_8);
+        Resource resource = new ClassPathResource("basiswoorden-gekeurd.txt");
+        try (Scanner sc = new Scanner(resource.getInputStream(), StandardCharsets.UTF_8);) {
+
             while (sc.hasNextLine()) {
                 String line = sc.nextLine();
                 words.add(new Word(line));
             }
         } catch (IOException e) {
             e.printStackTrace();
-        } finally {
-            try {
-                if(inputStream != null) {
-                    inputStream.close();
-                }
-                if(sc != null) {
-                    sc.close();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
 
         return words;
