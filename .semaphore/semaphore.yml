@@ -30,6 +30,13 @@ blocks:
         - name: Run Tests
           commands:
             - mvn test
+      env_vars:
+        - name: CODECOV_TOKEN
+          value: 58bbcb42-fa6f-43e8-b115-d7e894f0023f
+      epilogue:
+        on_pass:
+          commands:
+            - 'bash <(curl -s https://codecov.io/bash) -t ${CODECOV_TOKEN}'
 promotions:
   - name: Dockerize
     pipeline_file: pipeline_2.yml
